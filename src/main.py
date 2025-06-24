@@ -39,6 +39,20 @@ class Main_Program:
                            styles=menu_styles)
 
 
+        pages = {
+            "Your account": [
+                st.Page("tables_opportunities.py", title="Create your account"),
+                st.Page("tables_opportunity_source.py", title="Manage your account"),
+            ],
+            "Resources": [
+                st.Page("tables_leads.py", title="Learn about us"),
+                st.Page("tables_converted_leads.py", title="Try it out"),
+            ],
+        }
+
+        pg = st.navigation(pages)
+        pg.run()
+
         if page == "New Pipeline Tables":
             st.title('New Pipeline')
             st.markdown('This page is for the Start Pipeline Tables')
