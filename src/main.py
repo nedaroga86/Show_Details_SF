@@ -15,7 +15,8 @@ icon =  os.path.join(BASE_DIR, '..', 'images','logo.ico')
 class Main_Program:
     def get_start(self):
         set_config_page()
-        st.sidebar.text('Navigation:')
+        with st.sidebar:
+            st.text('Navigation:')
         pages = {
             "Opportunities": [
                 st.Page("tables_opportunities.py", title="Opportunities Tables"),
