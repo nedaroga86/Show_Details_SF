@@ -3,9 +3,6 @@ import os
 import numpy as np
 import pandas as pd
 import streamlit as st
-from dateutil.relativedelta import relativedelta
-
-from filter_opps import define_filters
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 opportunities_file =  os.path.join(BASE_DIR,'..', 'data', 'Opportunities.csv')
