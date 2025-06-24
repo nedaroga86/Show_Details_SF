@@ -60,5 +60,13 @@ class Main_Program:
             st.markdown('This page is for the Converted Leads Tables')
             show_converted_leads()
 
+        elif page == "Logout":
+            st.session_state.clear()
+            st.markdown(
+                "<h2 style='color: #EB1700; font-size: 50px;'>You have been logged out</h2>",
+                unsafe_allow_html=True
+            )
+            st.rerun()
+
 
 
