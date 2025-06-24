@@ -7,7 +7,7 @@ icon =  os.path.join(BASE_DIR, '..', 'images','logo.ico')
 
 
 
-st.set_page_config(page_title="Details Table Analysis", layout='wide', page_icon=icon)
+st.set_page_config(page_title="Details Table Analysis", layout='wide', page_icon=icon, initial_sidebar_state="expanded")
 
 
 pages = {
