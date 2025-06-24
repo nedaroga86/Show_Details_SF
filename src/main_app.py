@@ -1,7 +1,6 @@
 import os
 import streamlit as st
 
-from conf_page import set_config_page
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 icon =  os.path.join(BASE_DIR, '..', 'images','logo.ico')
