@@ -5,6 +5,8 @@ import pandas as pd
 import streamlit as st
 from dateutil.relativedelta import relativedelta
 
+from filter_opps import define_filters
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 opportunities_file =  os.path.join(BASE_DIR,'..', 'data', 'Opportunities.csv')
 
@@ -50,29 +52,11 @@ def get_all_Stages():
 def show_opportunity_table():
 
     st.subheader('Opportunities Table')
-    data = get_data()
+    filtered_data = st.session_state['opps_filtered']
 
-
-    period = st.sidebar.selectbox("Period", options=list(data['Period'].unique()), key='period')
-    filtered_data = data[data['Period'] == period]
-
-    start_date =  np.datetime64(period, 'D')
-    end_date = np.datetime64(start_date + relativedelta(months=1))
-
-    # Filter data based on date range
-    filtered_data = filtered_data[(filtered_data['ValidFromDate'] >= start_date) & (filtered_data['ValidFromDate'] <= end_date)]
-
-
-
-    # fILTER LOST REASON NOT DUPLICATE
-    # st.text(filtered_data.columns)
-    product = st.sidebar.selectbox("Product", options=['All'] + list(filtered_data['Product Family'].unique()), key='product_family')
-    if product != 'All':
-        filtered_data = filtered_data[filtered_data['Product Family'] == product]
-
-    region = st.sidebar.selectbox("Region", options=['All'] + list(filtered_data['Territory Bucket'].unique()), key='territory_bucket')
-    if region != 'All':
-        filtered_data = filtered_data[filtered_data['Territory Bucket'] == region]
+    opportunity_source = st.sidebar.radio("Opportunity Source", options=['All'] + list(filtered_data['Opportunity Source'].unique()), key='opportunity_source2')
+    if opportunity_source != 'All':
+        filtered_data = filtered_data[filtered_data['Opportunity Source'] == opportunity_source]
 
     filtered_data = filtered_data[~filtered_data['Loss Reason'].isin(['Duplicate', 'Duplicate Opportunity'])]
 
@@ -102,7 +86,7 @@ def show_opportunity_table():
     filtered_data = filtered_data[~((filtered_data['Product Family'] == 'ZTNA') & (filtered_data['Subtype'] == 'Usage Based'))]
 
     # Display the table
-    st.markdown(f"Opportunities for {period}: {filtered_data['Amount'].sum()/1000:,.0f}K")
+    st.markdown(f"Opportunities for {st.session_state['period']}: {filtered_data['Amount'].sum()/1000:,.0f}K")
     filtered_data.rename(columns={
         'Opportunity.Created Date': 'Created Dates',
         'Opportunity.Close Date': 'Close Dates'

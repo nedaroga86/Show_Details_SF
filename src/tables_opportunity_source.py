@@ -3,7 +3,9 @@ import os
 import numpy as np
 import pandas as pd
 import streamlit as st
-from dateutil.relativedelta import relativedelta
+
+
+from filter_opps import define_filters
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 opportunity_source_file = os.path.join(BASE_DIR, '..', 'data', 'Opportunities.csv')
@@ -24,36 +26,7 @@ def load_data():
 def show_opportunity_source_table():
     st.title('Opportunity Source Table')
 
-    data = load_data()
-
-    period = st.sidebar.selectbox("Period", list(data['Period'].unique()), key='period2')
-    filtered_data = data[data['Period'] == period]
-
-
-    start_date =  np.datetime64(period, 'D')
-    end_date = np.datetime64(start_date + relativedelta(months=1))
-
-    st.text(end_date)
-
-    # Filter data based on date range
-    filtered_data = filtered_data[(filtered_data['ValidFromDate'] >= start_date) & (filtered_data['ValidFromDate'] <= end_date)]
-
-    # fILTER LOST REASON NOT DUPLICATE
-    # st.text(filtered_data.columns)
-
-
-
-    product = st.sidebar.selectbox("Product", options=['All'] + list(filtered_data['Product Family'].unique()), key='product_family2')
-    if product != 'All':
-        filtered_data = filtered_data[filtered_data['Product Family'] == product]
-
-    region = st.sidebar.selectbox("Region", options=['All'] + list(filtered_data['Territory Bucket'].unique()), key='territory_bucket2')
-    if region != 'All':
-        filtered_data = filtered_data[filtered_data['Territory Bucket'] == region]
-
-    opportunity_source = st.sidebar.radio("Opportunity Source", options=['All'] + list(filtered_data['Opportunity Source'].unique()), key='opportunity_source2')
-    if opportunity_source != 'All':
-        filtered_data = filtered_data[filtered_data['Opportunity Source'] == opportunity_source]
+    filtered_data = st.session_state['opps_filtered']
 
     filtered_data = filtered_data[filtered_data['Opportunity Type']== 'New Customer']
 
@@ -62,8 +35,6 @@ def show_opportunity_source_table():
     filtered_data['first_day_of_month'] = filtered_data['ValidFromDate'].dt.to_period('M').dt.to_timestamp()
     filtered_data['Last_day_of_month'] = filtered_data['ValidToDate'].dt.to_period('M').dt.to_timestamp()
     filtered_data['is_valid'] = filtered_data['Last_day_of_month'] > filtered_data['first_day_of_month']
-
-
 
 
     target_date = pd.to_datetime("1899-12-30") + pd.to_timedelta(32874, unit="D")
@@ -85,7 +56,7 @@ def show_opportunity_source_table():
     filtered_data = filtered_data[~((filtered_data['Product Family'] == 'ZTNA') & (filtered_data['Subtype'] == 'Usage Based'))]
 
     # Display the table
-    st.text(f"Opportunities for May 2025: {filtered_data['Amount'].sum()/1000:,.0f}K")
+    st.text(f"Opportunities for {st.session_state['period']}: {filtered_data['Amount'].sum()/1000:,.0f}K")
     filtered_data.rename(columns={
         'Opportunity.Created Date': 'Created Dates',
         'Opportunity.Close Date': 'Close Dates'
