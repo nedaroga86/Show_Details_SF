@@ -35,15 +35,15 @@ def show_opportunity_source_table():
 
     # fILTER LOST REASON NOT DUPLICATE
     # st.text(filtered_data.columns)
-    product = st.sidebar.selectbox("Product", options=['All'] + list(filtered_data['Product Family'].unique()), key='product_family')
+    product = st.sidebar.selectbox("Product", options=['All'] + list(filtered_data['Product Family'].unique()), key='product_family2')
     if product != 'All':
         filtered_data = filtered_data[filtered_data['Product Family'] == product]
 
-    region = st.sidebar.selectbox("Region", options=['All'] + list(filtered_data['Territory Bucket'].unique()), key='territory_bucket')
+    region = st.sidebar.selectbox("Region", options=['All'] + list(filtered_data['Territory Bucket'].unique()), key='territory_bucket2')
     if region != 'All':
         filtered_data = filtered_data[filtered_data['Territory Bucket'] == region]
 
-    opportunity_source = st.sidebar.radio("Opportunity Source", options=['All'] + list(filtered_data['Opportunity Source'].unique()), key='opportunity_source')
+    opportunity_source = st.sidebar.radio("Opportunity Source", options=['All'] + list(filtered_data['Opportunity Source'].unique()), key='opportunity_source2')
     if opportunity_source != 'All':
         filtered_data = filtered_data[filtered_data['Opportunity Source'] == opportunity_source]
 
