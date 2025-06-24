@@ -3,9 +3,10 @@ import os
 import numpy as np
 import pandas as pd
 import streamlit as st
+from dateutil.relativedelta import relativedelta
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-opportunities_file =  os.path.join(BASE_DIR,'..', 'data', 'May_2025.csv')
+opportunities_file =  os.path.join(BASE_DIR,'..', 'data', 'Opportunities.csv')
 
 
 
@@ -50,11 +51,18 @@ def show_opportunity_table():
 
     st.subheader('Opportunities Table')
     data = get_data()
-    start_date =  np.datetime64('2025-05-01', 'D')
-    end_date = np.datetime64('2025-05-31', 'D')
+
+
+    period = st.sidebar.selectbox("Period", options=list(data['Period'].unique()), key='period')
+    filtered_data = data[data['Period'] == period]
+
+    start_date =  np.datetime64(period, 'D')
+    end_date = np.datetime64(start_date + relativedelta(months=1))
 
     # Filter data based on date range
-    filtered_data = data[(data['ValidFromDate'] >= start_date) & (data['ValidFromDate'] <= end_date)]
+    filtered_data = filtered_data[(filtered_data['ValidFromDate'] >= start_date) & (filtered_data['ValidFromDate'] <= end_date)]
+
+
 
     # fILTER LOST REASON NOT DUPLICATE
     # st.text(filtered_data.columns)
@@ -94,7 +102,7 @@ def show_opportunity_table():
     filtered_data = filtered_data[~((filtered_data['Product Family'] == 'ZTNA') & (filtered_data['Subtype'] == 'Usage Based'))]
 
     # Display the table
-    st.text(f"Opportunities for May 2025: {filtered_data['Amount'].sum()/1000:,.0f}K")
+    st.markdown(f"Opportunities for {period}: {filtered_data['Amount'].sum()/1000:,.0f}K")
     filtered_data.rename(columns={
         'Opportunity.Created Date': 'Created Dates',
         'Opportunity.Close Date': 'Close Dates'

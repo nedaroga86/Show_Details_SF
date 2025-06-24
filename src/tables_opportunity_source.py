@@ -3,12 +3,10 @@ import os
 import numpy as np
 import pandas as pd
 import streamlit as st
-
-
-
+from dateutil.relativedelta import relativedelta
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-opportunity_source_file = os.path.join(BASE_DIR, '..', 'data', 'May_2025.csv')
+opportunity_source_file = os.path.join(BASE_DIR, '..', 'data', 'Opportunities.csv')
 
 
 def load_data():
@@ -27,14 +25,24 @@ def show_opportunity_source_table():
     st.title('Opportunity Source Table')
 
     data = load_data()
-    start_date =  np.datetime64('2025-05-01', 'D')
-    end_date = np.datetime64('2025-05-31', 'D')
+
+    period = st.sidebar.selectbox("Period", list(data['Period'].unique()), key='period2')
+    filtered_data = data[data['Period'] == period]
+
+
+    start_date =  np.datetime64(period, 'D')
+    end_date = np.datetime64(start_date + relativedelta(months=1))
+
+    st.text(end_date)
 
     # Filter data based on date range
-    filtered_data = data[(data['ValidFromDate'] >= start_date) & (data['ValidFromDate'] <= end_date)]
+    filtered_data = filtered_data[(filtered_data['ValidFromDate'] >= start_date) & (filtered_data['ValidFromDate'] <= end_date)]
 
     # fILTER LOST REASON NOT DUPLICATE
     # st.text(filtered_data.columns)
+
+
+
     product = st.sidebar.selectbox("Product", options=['All'] + list(filtered_data['Product Family'].unique()), key='product_family2')
     if product != 'All':
         filtered_data = filtered_data[filtered_data['Product Family'] == product]
