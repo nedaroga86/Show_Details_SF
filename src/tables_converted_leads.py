@@ -65,4 +65,3 @@ def show_converted_leads():
     st.dataframe(leads_df[mask][['Lead ID','Lead Source', 'AccountId.Name','Share Amount','Opportunity ID',	'Name.1',	'OwnerId.Name',	'Opportunity Type',	'Opportunity Source',
                                  'Product Family',	'Opportunity.Created Date',	'Opportunity.Close Date']], use_container_width=True, height=700)
 
-show_converted_leads()
