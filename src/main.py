@@ -1,8 +1,6 @@
 import os
 import streamlit as st
 
-
-
 from conf_page import set_config_page
 
 
@@ -28,7 +26,7 @@ class Main_Program:
                 st.Page("tables_converted_leads.py", title="Converted Tables")
             ],
         }
-        pg = st.navigation(pages, position="top")
+        pg = st.navigation(pages)
         pg.run()
 
 
