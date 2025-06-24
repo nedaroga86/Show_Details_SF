@@ -87,3 +87,4 @@ def show_opportunity_source_table():
     filtered_data['Amount'] = (filtered_data['Amount']/1000).astype('int').round(0)
     st.dataframe(filtered_data[['Opportunity ID', 'Opportunity Number', 'Stage Name', 'Name', 'Stage', 'Created Dates','Close Dates','Amount']], use_container_width =True, hide_index=True, height=700)
 
+show_opportunity_source_table()

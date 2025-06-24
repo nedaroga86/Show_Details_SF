@@ -46,7 +46,8 @@ def get_all_Stages():
 
 
 
-def show_opportunities_table():
+def show_opportunity_table():
+
     st.subheader('Opportunities Table')
     data = get_data()
     start_date =  np.datetime64('2025-05-01', 'D')
@@ -104,3 +105,4 @@ def show_opportunities_table():
     st.dataframe(filtered_data[['Opportunity ID', 'Opportunity Number', 'Stage Name', 'Name', 'Stage', 'Created Dates','Close Dates','Amount']], use_container_width =True, hide_index=True, height=700)
 
 
+show_opportunity_table()

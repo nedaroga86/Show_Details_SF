@@ -5,7 +5,7 @@ import bcrypt
 import pandas as pd
 import streamlit as st
 from streamlit_space import space
-from main import Main_Program
+from main_app import Main_Program
 
 
 st.cache_data.clear()

@@ -41,6 +41,7 @@ def get_all_Stages():
 
 def show_converted_leads():
     st.subheader('Marketing Leads Converted to Opportunities Total ACV  ')
+    st.sidebar.text('This table shows the total ACV of marketing leads converted to opportunities in the month of May 2025. ')
     leads_df = get_data()
     start_date =  np.datetime64('2025-05-01', 'D')
     end_date = np.datetime64('2025-06-01', 'D')
@@ -65,3 +66,5 @@ def show_converted_leads():
     st.dataframe(leads_df[mask][['Lead ID','Lead Source', 'AccountId.Name','Share Amount','Opportunity ID',	'Name.1',	'OwnerId.Name',	'Opportunity Type',	'Opportunity Source',
                                  'Product Family',	'Opportunity.Created Date',	'Opportunity.Close Date']], use_container_width=True, height=700)
 
+
+show_converted_leads()

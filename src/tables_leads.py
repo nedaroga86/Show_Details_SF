@@ -69,3 +69,4 @@ def show_leads_table():
     st.text(f"Number of leads: {filtered_df[mask].shape[0]}")
     st.dataframe(filtered_df[mask], use_container_width=True, hide_index=True, height=700)
 
+show_leads_table()
