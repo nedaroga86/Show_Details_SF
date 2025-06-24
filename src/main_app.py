@@ -12,7 +12,7 @@ def call_main_app():
 
     pages = {
         "Opportunities": [
-            st.Page("tables_opportunities.py", title="Opportunities"),
+            st.Page("tables_opportunities.py", title="New Pipeline"),
             st.Page("tables_opportunity_source.py", title="Opportunities Source"),
         ],
         "Leads": [
