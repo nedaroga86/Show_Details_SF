@@ -5,15 +5,15 @@ import bcrypt
 import pandas as pd
 import streamlit as st
 from streamlit_space import space
-from main_app import Main_Program
 
+from main_app import call_main_app
 
 st.cache_data.clear()
 st.cache_resource.clear()
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 icon =  os.path.join(BASE_DIR, '..', 'images','icon.ico')
-st.set_page_config(page_title="Details Table Analysis", layout= 'wide', page_icon=icon)
+st.set_page_config(page_title="Details Table Analysis", layout= 'wide', page_icon=icon, initial_sidebar_state="expanded")
 
 page_bg_img = """
 <style>
@@ -162,9 +162,7 @@ class Logging():
                         st.info("Press enter to login")
 
         if st.session_state.logged_in:
-            prog = Main_Program()
-            prog.get_start()
-
+            call_main_app()
 
 
 if __name__ == "__main__":
