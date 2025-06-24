@@ -13,7 +13,7 @@ st.cache_resource.clear()
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 icon =  os.path.join(BASE_DIR, '..', 'images','icon.ico')
-st.set_page_config(page_title="Cohort Analysis", layout= 'wide', page_icon=icon)
+st.set_page_config(page_title="Details Table Analysis", layout= 'wide', page_icon=icon)
 
 page_bg_img = """
 <style>
@@ -50,7 +50,7 @@ class Logging():
 
 
         st.markdown(
-            "<h2 style='color: ##EB1700; font-size: 50px;'>Cohort Analysis and Sales Insights Tool</h2>",
+            "<h2 style='color: ##EB1700; font-size: 50px;'>Table Details (Monthly Metrics) </h2>",
             unsafe_allow_html=True
         )
 
@@ -67,15 +67,13 @@ class Logging():
             }
             </style>
             <div class="descripcion">
-                Our platform empowers you to analyze sales performance trends and uncover actionable insights using 
-                historical data across three core dimensions: Customer Cohorts, Sales Trends, and Revenue Metrics. By 
-                leveraging advanced analytics, businesses can track cohort behaviors, monitor sales patterns over time, 
-                and measure revenue growth across defined periods.
-                <br><br>
-                This comprehensive approach identifies key growth opportunities, retention patterns, and areas for 
-                improvement, enabling data-driven decisions to optimize sales strategies. Bridge the gap between past 
-                performance and future success with tailored insights that drive sustainable growth and maximize sales 
-                potential!..
+            Our platform is designed to provide detailed visibility into the data presented in the monthly reports. 
+            It allows you to explore sales performance with clarity, offering a deeper understanding of key metrics 
+            across dimensions such as Customer Cohorts, Sales Trends, and Revenue Metrics.
+            <br><br>
+            By leveraging historical data and advanced analytics, you can uncover trends, track behavioral patterns, 
+            and measure performance across specific periods. This detailed view supports more accurate interpretation 
+            of the monthly summaries and enables better data-driven decision-making to refine your commercial strategies.
                 <br><br>
             </div>
             """, unsafe_allow_html=True)
