@@ -49,7 +49,7 @@ def call_main_app():
     logout = st.sidebar.button('Logout', key='logout_button',type='primary')
     if logout:
         call_logout()
-    st.session_state['opps_filtered'],st.session_state['period'] = define_filters(st.session_state['opps'])
+
 
     pages = {
         "Opportunities": [

@@ -62,9 +62,11 @@ def show_converted_leads():
 
     )
 
-    st.text(f"Marketing Leads Converted: {leads_df[mask]['Counting Dup Opps'].sum():,.0f} Leads,  {leads_df[mask]['Share Amount'].sum():,.0f} Converted Amount")
-    st.dataframe(leads_df[mask][['Lead ID','Lead Source', 'AccountId.Name','Share Amount','Opportunity ID',	'Name.1',	'OwnerId.Name',	'Opportunity Type',	'Opportunity Source',
-                                 'Product Family',	'Opportunity.Created Date',	'Opportunity.Close Date']], use_container_width=True, height=700)
+    st.text(f"Marketing Leads Converted: {leads_df[mask]['Counting Dup Opps'].sum():,.0f} Leads,  {leads_df[mask]['Amount'].sum():,.0f} Converted Amount")
+    opp_converted = leads_df[mask][['Opportunity ID',	'Name.1',	'OwnerId.Name',	'Opportunity Type',	'Opportunity Source',
+                                    'Product Family',	'Opportunity.Created Date',	'Opportunity.Close Date', 'Amount']]
+
+    st.dataframe(opp_converted.drop_duplicates().sort_values(by='Amount', ascending=False), use_container_width=True, height=700)
 
 
 show_converted_leads()

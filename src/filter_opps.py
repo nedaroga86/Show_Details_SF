@@ -24,3 +24,4 @@ def define_filters(data):
 
 
     return filtered_data, period
+
