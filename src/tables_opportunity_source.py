@@ -5,6 +5,7 @@ import pandas as pd
 import streamlit as st
 
 from logout import call_logout
+from src.filter_opps import define_filters
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 opportunity_source_file = os.path.join(BASE_DIR, '..', 'data', 'Opportunities.csv')
@@ -13,6 +14,8 @@ opportunity_source_file = os.path.join(BASE_DIR, '..', 'data', 'Opportunities.cs
 
 def show_opportunity_source_table():
     st.title('Opportunity Source Table')
+
+    st.session_state['opps_filtered'],st.session_state['period'] = define_filters(st.session_state['opps'])
 
     filtered_data = st.session_state['opps_filtered']
 
