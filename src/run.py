@@ -13,7 +13,7 @@ st.cache_resource.clear()
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 icon =  os.path.join(BASE_DIR, '..', 'images','icon.ico')
-st.set_page_config(page_title="Details Table Analysis", layout= 'wide', page_icon=icon, initial_sidebar_state="expanded")
+
 
 page_bg_img = """
 <style>
@@ -39,7 +39,7 @@ page_bg_img = """
 
 
 
-class Logging():
+class Logging:
 
     def __init__(self):
         self.users_DB = None
@@ -94,6 +94,7 @@ class Logging():
 
 
         if not st.session_state.logged_in:
+            st.set_page_config(page_title="Details Table Analysis", layout= 'wide', page_icon=icon, initial_sidebar_state="collapsed")
             with auth_container.container():
                 logo =  os.path.join(BASE_DIR, '..', 'images','logo.png')
                 st.logo(logo)
@@ -162,7 +163,10 @@ class Logging():
                         st.info("Press enter to login")
 
         if st.session_state.logged_in:
+            st.set_page_config(page_title="Details Table Analysis", layout= 'wide', page_icon=icon, initial_sidebar_state="expanded")
             call_main_app()
+
+
 
 
 if __name__ == "__main__":

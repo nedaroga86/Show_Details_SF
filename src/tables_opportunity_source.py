@@ -4,21 +4,11 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
+from logout import call_logout
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 opportunity_source_file = os.path.join(BASE_DIR, '..', 'data', 'Opportunities.csv')
 
-
-def load_data():
-    if not st.session_state.get('data_loaded', False):
-        st.session_state['opps'] = pd.read_csv(opportunity_source_file)
-        st.session_state['opps'].columns = st.session_state['opps'].columns.str.strip()
-        st.session_state['opps']['ValidFromDate'] = st.session_state['opps']['ValidFromDate'].astype('datetime64[ns]')
-        st.session_state['opps']['ValidToDate'] = np.where(st.session_state['opps']['ValidToDate'] == '3000-01-01', '2250-01-01', st.session_state['opps']['ValidToDate'])
-        st.session_state['opps']['ValidToDate'] = st.session_state['opps']['ValidToDate'].astype('datetime64[ns]')
-        st.session_state['opps']['Amount'] = pd.to_numeric(st.session_state['opps']['Amount'], errors='coerce')
-        st.session_state['data_loaded'] = True
-    return st.session_state['opps']
 
 
 def show_opportunity_source_table():

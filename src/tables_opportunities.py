@@ -4,6 +4,8 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
+from logout import call_logout
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 opportunities_file =  os.path.join(BASE_DIR,'..', 'data', 'Opportunities.csv')
 
@@ -49,6 +51,7 @@ def get_all_Stages():
 def show_opportunity_table():
 
     st.subheader('Opportunities Table')
+
     filtered_data = st.session_state['opps_filtered']
 
     opportunity_source = st.sidebar.radio("Opportunity Source", options=['All'] + list(filtered_data['Opportunity Source'].unique()), key='opportunity_source2')

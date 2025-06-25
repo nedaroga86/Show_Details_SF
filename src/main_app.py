@@ -5,12 +5,14 @@ import pandas as pd
 import streamlit as st
 
 from filter_opps import define_filters
+from logout import call_logout
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 icon =  os.path.join(BASE_DIR, '..', 'images','logo.ico')
 
 
 opportunity_source_file = os.path.join(BASE_DIR, '..', 'data', 'Opportunities.csv')
+loeads_file =  os.path.join(BASE_DIR,'..', 'data', 'Clean_leads.csv')
 
 def load_opp():
     if not st.session_state.get('data_loaded', False):
@@ -21,19 +23,32 @@ def load_opp():
         st.session_state['opps']['ValidToDate'] = st.session_state['opps']['ValidToDate'].astype('datetime64[ns]')
         st.session_state['opps']['Amount'] = pd.to_numeric(st.session_state['opps']['Amount'], errors='coerce')
         st.session_state['data_loaded'] = True
+
     return st.session_state['opps']
+
+def load_leads():
+    if not st.session_state.get('leads_loaded', False):
+        st.session_state['leads'] = pd.read_csv(loeads_file)
+        st.session_state['leads_loaded'] = True
+    return st.session_state['leads']
+
 
 def get_data():
     if 'opps' not in st.session_state:
         st.session_state['opps'] = load_opp()
-    return st.session_state['opps']
+        st.session_state['leads'] = load_leads()
+    return st.session_state['opps'],st.session_state['leads']
 
 
 
 def call_main_app():
 
-    st.set_page_config(page_title="Details Table Analysis", layout='wide', page_icon=icon, initial_sidebar_state="expanded")
-    get_data()
+
+    with st.spinner("Wait for it..."):
+        get_data()
+    logout = st.sidebar.button('Logout', key='logout_button',type='primary')
+    if logout:
+        call_logout()
     st.session_state['opps_filtered'],st.session_state['period'] = define_filters(st.session_state['opps'])
 
     pages = {
@@ -44,13 +59,9 @@ def call_main_app():
         "Leads": [
             st.Page("tables_leads.py", title="Priority Leads"),
             st.Page("tables_converted_leads.py", title="Converted Leads"),
-        ],
+        ]
     }
 
 
     pg = st.navigation(pages, position="top")
     pg.run()
-
-
-
-call_main_app()
