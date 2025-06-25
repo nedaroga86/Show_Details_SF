@@ -5,7 +5,7 @@ import pandas as pd
 import streamlit as st
 
 from logout import call_logout
-from src.filter_opps import define_filters
+from filter_opps import define_filters
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 opportunity_source_file = os.path.join(BASE_DIR, '..', 'data', 'Opportunities.csv')
