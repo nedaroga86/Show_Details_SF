@@ -49,7 +49,7 @@ def get_all_Stages():
 
 def show_opportunity_table():
     st.session_state['opps_filtered'],st.session_state['period'] = define_filters(st.session_state['opps'])
-    st.subheader('Opportunities Table')
+    st.subheader('New Pipeline Details')
 
     filtered_data = st.session_state['opps_filtered']
 
