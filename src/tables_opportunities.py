@@ -95,7 +95,8 @@ def show_opportunity_table():
     filtered_data['Amount'] = (filtered_data['Amount']/1000).astype('int').round(0)
     num_rows = len(filtered_data)
     height = min(800, max(300, num_rows * 25))
-    st.dataframe(filtered_data[['Opportunity ID', 'Opportunity Number', 'Stage Name', 'Name', 'Stage', 'Created Dates','Close Dates','Amount']],
+    st.dataframe(filtered_data[['Opportunity ID', 'Opportunity Number', 'Account Name','Stage Name', 'Name', 'Stage', 'Created Dates','Full Name',
+                                'Close Dates','Amount','Product Family','Industry','Territory Bucket','Market Segment','Opportunity Type']],
                  use_container_width =True, hide_index=True, height=height)
 
 
