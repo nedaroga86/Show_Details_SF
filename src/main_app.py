@@ -16,7 +16,7 @@ loeads_file =  os.path.join(BASE_DIR,'..', 'data', 'Clean_leads.csv')
 
 def load_opp():
     if not st.session_state.get('data_loaded', False):
-        st.session_state['opps'] = pd.read_pkl(opportunity_source_file)
+        st.session_state['opps'] = pd.read_pickle(opportunity_source_file)
         st.session_state['opps'].columns = st.session_state['opps'].columns.str.strip()
         st.session_state['opps']['ValidFromDate'] = st.session_state['opps']['ValidFromDate'].astype('datetime64[ns]')
         st.session_state['opps']['ValidToDate'] = np.where(st.session_state['opps']['ValidToDate'] == '3000-01-01', '2250-01-01', st.session_state['opps']['ValidToDate'])
