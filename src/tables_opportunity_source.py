@@ -13,7 +13,8 @@ opportunity_source_file = os.path.join(BASE_DIR, '..', 'data', 'Opportunities.cs
 
 
 def show_opportunity_source_table():
-    st.title('Opportunity Source Table')
+    st.title('Opportunity Source Details')
+    st.markdown('#### Opportunity Source: Marketing, Channel, Sales ')
 
     st.session_state['opps_filtered'],st.session_state['period'] = define_filters(st.session_state['opps'])
 
