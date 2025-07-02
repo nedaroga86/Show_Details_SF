@@ -55,6 +55,7 @@ def show_opportunity_source_table():
 
     filtered_data = filtered_data.sort_values(by='Amount', ascending=False)
     filtered_data['Amount'] = (filtered_data['Amount']/1000).astype('int').round(0)
-    st.dataframe(filtered_data[['Opportunity ID', 'Opportunity Number','Stage Name', 'Name', 'Stage', 'Created Dates','Close Dates','Amount']], use_container_width =True, hide_index=True, height=700)
+    st.dataframe(filtered_data[['Opportunity ID', 'Opportunity Number', 'Account Name','Stage Name', 'Name', 'Stage', 'Created Dates','Full Name',
+                                'Close Dates','Amount','Product Family','Industry','Territory Bucket','Market Segment','Opportunity Type']], use_container_width =True, hide_index=True, height=700)
 
 show_opportunity_source_table()
