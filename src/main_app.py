@@ -11,7 +11,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 icon =  os.path.join(BASE_DIR, '..', 'images','logo.ico')
 
 
-opportunity_source_file = os.path.join(BASE_DIR, '..', 'data', 'Opportunities.pkl')
+opportunity_source_file = os.path.join(BASE_DIR, '..', 'data', 'opportunities.pkl')
 loeads_file =  os.path.join(BASE_DIR,'..', 'data', 'Clean_leads.csv')
 
 def load_opp():
