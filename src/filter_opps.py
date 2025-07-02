@@ -4,7 +4,7 @@ from dateutil.relativedelta import relativedelta
 
 
 def define_filters(data):
-    period = st.sidebar.selectbox("Period", list(data['Period'].unique()))
+    period = st.sidebar.selectbox("Period", sorted(list(data['Period'].unique())),)
     filtered_data = data[data['Period'] == period]
 
     start_date =  np.datetime64(period, 'D')
