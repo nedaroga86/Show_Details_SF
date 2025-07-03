@@ -18,7 +18,7 @@ def define_filters(data):
     if type != 'All':
         filtered_data = filtered_data[filtered_data['Opportunity Type'] == type]
 
-    source = st.sidebar.selectbox("Opportunity Source", options=['All'] + list(filtered_data['Opportunity Sype'].unique()))
+    source = st.sidebar.selectbox("Opportunity Source", options=['All'] + list(filtered_data['Opportunity Source'].unique()))
     if source != 'All':
         filtered_data = filtered_data[filtered_data['Opportunity Source'] == source]
 
