@@ -48,7 +48,8 @@ def show_leads_table():
     st.subheader('Leads Table')
     leads_df = get_data()
     periods = leads_df['Period'].unique().tolist()
-    st.sidebar.selectbox("Period", periods)
+    period = st.sidebar.selectbox("Period", periods)
+    leads_df = leads_df[leads_df['Period'] == period]
 
     start_date =  np.datetime64('2025-05-01', 'D')
     end_date = np.datetime64('2025-05-31', 'D')
