@@ -47,6 +47,8 @@ def get_all_Stages():
 def show_leads_table():
     st.subheader('Leads Table')
     leads_df = get_data()
+    periods = leads_df['Period'].unique().tolist()
+    st.sidebar.selectbox("Period", periods)
 
     start_date =  np.datetime64('2025-05-01', 'D')
     end_date = np.datetime64('2025-05-31', 'D')
