@@ -3,6 +3,7 @@ import os
 import numpy as np
 import pandas as pd
 import streamlit as st
+from dateutil.relativedelta import relativedelta
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 file_2025_5 =  os.path.join(BASE_DIR,'..', 'data', '2025_5.csv')
@@ -51,8 +52,8 @@ def show_leads_table():
     period = st.sidebar.selectbox("Period", periods)
     leads_df = leads_df[leads_df['Period'] == period]
 
-    start_date =  np.datetime64('2025-05-01', 'D')
-    end_date = np.datetime64('2025-05-31', 'D')
+    start_date =  np.datetime64(period, 'D')
+    end_date = np.datetime64(start_date + relativedelta(months=1))
 
     list_priority = ['Priority 1', 'Priority 2', 'Priority 3']
 
