@@ -1,5 +1,4 @@
 import os
-
 import numpy as np
 import pandas as pd
 import streamlit as st
@@ -21,7 +20,6 @@ def load_opp():
         st.session_state['opps']['ValidToDate'] = st.session_state['opps']['ValidToDate'].astype('datetime64[ns]')
         st.session_state['opps']['Amount'] = pd.to_numeric(st.session_state['opps']['Amount'], errors='coerce')
         st.session_state['data_loaded'] = True
-
     return st.session_state['opps']
 
 def load_leads():

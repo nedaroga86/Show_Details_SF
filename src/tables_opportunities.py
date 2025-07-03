@@ -6,14 +6,14 @@ import streamlit as st
 from filter_opps import define_filters
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-opportunities_file =  os.path.join(BASE_DIR,'..', 'data', 'Opportunities.csv')
+opportunities_file =  os.path.join(BASE_DIR,'..', 'data', 'opportunities.pkl')
 
 
 
 
 def load_data():
     if not st.session_state.get('data_loaded', False):
-        st.session_state['opps'] = pd.read_csv(opportunities_file)
+        st.session_state['opps'] = pd.read_pickle(opportunities_file)
         st.session_state['opps'].columns = st.session_state['opps'].columns.str.strip()
         st.session_state['opps']['ValidFromDate'] = st.session_state['opps']['ValidFromDate'].astype('datetime64[ns]')
         st.session_state['opps']['ValidToDate'] = np.where(st.session_state['opps']['ValidToDate'] == '3000-01-01', '2250-01-01', st.session_state['opps']['ValidToDate'])
