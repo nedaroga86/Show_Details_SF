@@ -13,6 +13,15 @@ def define_filters(data):
     # Filter data based on date range
     filtered_data = filtered_data[(filtered_data['ValidFromDate'] >= start_date) & (filtered_data['ValidFromDate'] < end_date)]
 
+
+    type = st.sidebar.selectbox("Opportunity Type", options=['All'] + list(filtered_data['Opportunity Type'].unique()))
+    if type != 'All':
+        filtered_data = filtered_data[filtered_data['Opportunity Type'] == type]
+
+    source = st.sidebar.selectbox("Opportunity Source", options=['All'] + list(filtered_data['Opportunity Sype'].unique()))
+    if source != 'All':
+        filtered_data = filtered_data[filtered_data['Opportunity Source'] == source]
+
     product = st.sidebar.selectbox("Product", options=['All'] + list(filtered_data['Product Family'].unique()))
     if product != 'All':
         filtered_data = filtered_data[filtered_data['Product Family'] == product]
@@ -20,6 +29,7 @@ def define_filters(data):
     region = st.sidebar.selectbox("Region", options=['All'] + list(filtered_data['Territory Bucket'].unique()))
     if region != 'All':
         filtered_data = filtered_data[filtered_data['Territory Bucket'] == region]
+
 
 
     return filtered_data, period
