@@ -56,7 +56,6 @@ def show_leads_table():
     end_date = np.datetime64(start_date + relativedelta(months=1))
 
     list_priority = ['Priority 1', 'Priority 2', 'Priority 3']
-
     lead_priority = st.sidebar.radio("Lead Priority", options=['All'] + list_priority, key='Lead_Priority')
     if lead_priority != 'All':
         filtered_df = leads_df[leads_df['Lead Priority'] == lead_priority]

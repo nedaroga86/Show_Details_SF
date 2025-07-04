@@ -5,14 +5,20 @@ import pandas as pd
 import streamlit as st
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-opportunities_file =  os.path.join(BASE_DIR,'..', 'data', 'Clean_leads.csv')
+file_2025_5 =  os.path.join(BASE_DIR,'..', 'data', '2025_5.csv')
+file_2025_6 =  os.path.join(BASE_DIR,'..', 'data', '2025_6.csv')
 
 
 
 
 def load_data():
     if not st.session_state.get('leads_loaded', False):
-        st.session_state['leads'] = pd.read_csv(opportunities_file)
+        f_2025_5 = pd.read_csv(file_2025_5)
+        f_2025_5['Period'] = '2025-05-01'
+        f_2025_6 = pd.read_csv(file_2025_6)
+        f_2025_6['Period'] = '2025-06-01'
+
+        st.session_state['leads'] = pd.concat([f_2025_5, f_2025_6])
         st.session_state['leads_loaded'] = True
     return st.session_state['leads']
 
@@ -43,6 +49,9 @@ def show_converted_leads():
     st.subheader('Marketing Leads Converted to Opportunities Total ACV  ')
     st.sidebar.text('This table shows the total ACV of marketing leads converted to opportunities in the month of May 2025. ')
     leads_df = get_data()
+    periods = leads_df['Period'].unique().tolist()
+    period = st.sidebar.selectbox("Period", periods)
+    leads_df = leads_df[leads_df['Period'] == period]
     start_date =  np.datetime64('2025-05-01', 'D')
     end_date = np.datetime64('2025-06-01', 'D')
 
