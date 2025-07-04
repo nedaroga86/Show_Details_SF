@@ -31,6 +31,5 @@ def define_filters(data):
         filtered_data = filtered_data[filtered_data['Territory Bucket'] == region]
 
 
-
     return filtered_data, period
 
