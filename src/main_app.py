@@ -8,14 +8,28 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 icon =  os.path.join(BASE_DIR, '..', 'images','logo.ico')
 
 
-opportunity_source_file = os.path.join(BASE_DIR, '..', 'data', 'opportunities.pkl')
-file_2025_5 =  os.path.join(BASE_DIR,'..', 'data', '2025_5.csv')
-file_2025_6 =  os.path.join(BASE_DIR,'..', 'data', '2025_6.csv')
+opportunities_file_2025_3 =  os.path.join(BASE_DIR,'..', 'data', 'opportunities','opportunities_2025-03-01.csv')
+opportunities_file_2025_4 =  os.path.join(BASE_DIR,'..', 'data', 'opportunities','opportunities_2025-04-01.csv')
+opportunities_file_2025_5 =  os.path.join(BASE_DIR,'..', 'data', 'opportunities', 'opportunities_2025-05-01.csv')
+opportunities_file_2025_6 =  os.path.join(BASE_DIR,'..', 'data', 'opportunities', 'opportunities_2025-06-01.csv')
+opportunities_file_2025_7 =  os.path.join(BASE_DIR,'..', 'data', 'opportunities', 'opportunities_2025-07-01.csv')
+
+
+file_2025_5 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2025_5.csv')
+file_2025_6 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2025_6.csv')
+file_2025_7 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2025_7.csv')
 
 
 def load_opp():
     if not st.session_state.get('data_loaded', False):
-        st.session_state['opps'] = pd.read_pickle(opportunity_source_file)
+        st.session_state['opps'] = pd.concat([
+            pd.read_csv(opportunities_file_2025_3),
+            pd.read_csv(opportunities_file_2025_4),
+            pd.read_csv(opportunities_file_2025_5),
+            pd.read_csv(opportunities_file_2025_6),
+            pd.read_csv(opportunities_file_2025_7)
+        ], ignore_index=True)
+
         st.session_state['opps'].columns = st.session_state['opps'].columns.str.strip()
         st.session_state['opps']['ValidFromDate'] = st.session_state['opps']['ValidFromDate'].astype('datetime64[ns]')
         st.session_state['opps']['ValidToDate'] = np.where(st.session_state['opps']['ValidToDate'] == '3000-01-01', '2250-01-01', st.session_state['opps']['ValidToDate'])
@@ -30,7 +44,9 @@ def load_leads():
         f_2025_5['Period'] = '2025-05-01'
         f_2025_6 = pd.read_csv(file_2025_6)
         f_2025_6['Period'] = '2025-06-01'
-        st.session_state['leads'] = pd.concat([f_2025_5, f_2025_6])
+        f_2025_7 = pd.read_csv(file_2025_7)
+        f_2025_7['Period'] = '2025-07-01'
+        st.session_state['leads'] = pd.concat([f_2025_5, f_2025_6,f_2025_7])
         st.session_state['leads_loaded'] = True
     return st.session_state['leads']
 

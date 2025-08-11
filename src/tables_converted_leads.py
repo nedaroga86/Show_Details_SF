@@ -5,8 +5,9 @@ import pandas as pd
 import streamlit as st
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-file_2025_5 =  os.path.join(BASE_DIR,'..', 'data', '2025_5.csv')
-file_2025_6 =  os.path.join(BASE_DIR,'..', 'data', '2025_6.csv')
+file_2025_5 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2025_5.csv')
+file_2025_6 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2025_6.csv')
+file_2025_7 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2025_7.csv')
 
 
 

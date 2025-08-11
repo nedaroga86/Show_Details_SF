@@ -6,14 +6,27 @@ import streamlit as st
 from filter_opps import define_filters
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-opportunities_file =  os.path.join(BASE_DIR,'..', 'data', 'opportunities.pkl')
+opportunities_file_2025_3 =  os.path.join(BASE_DIR,'..', 'data', 'opportunities','opportunities_2025-03-01.csv')
+opportunities_file_2025_4 =  os.path.join(BASE_DIR,'..', 'data', 'opportunities','opportunities_2025-04-01.csv')
+opportunities_file_2025_5 =  os.path.join(BASE_DIR,'..', 'data', 'opportunities', 'opportunities_2025-05-01.csv')
+opportunities_file_2025_6 =  os.path.join(BASE_DIR,'..', 'data', 'opportunities', 'opportunities_2025-06-01.csv')
+opportunities_file_2025_7 =  os.path.join(BASE_DIR,'..', 'data', 'opportunities', 'opportunities_2025-07-01.csv')
 
 
 
 
 def load_data():
     if not st.session_state.get('data_loaded', False):
-        st.session_state['opps'] = pd.read_pickle(opportunities_file)
+        st.session_state['opps'] = pd.DataFrame()
+        st.session_state['opps'] = pd.concat([
+            pd.read_csv(opportunities_file_2025_3),
+            pd.read_csv(opportunities_file_2025_4),
+            pd.read_csv(opportunities_file_2025_5),
+            pd.read_csv(opportunities_file_2025_6),
+            pd.read_csv(opportunities_file_2025_7)
+        ], ignore_index=True)
+
+
         st.session_state['opps'].columns = st.session_state['opps'].columns.str.strip()
         st.session_state['opps']['ValidFromDate'] = st.session_state['opps']['ValidFromDate'].astype('datetime64[ns]')
         st.session_state['opps']['ValidToDate'] = np.where(st.session_state['opps']['ValidToDate'] == '3000-01-01', '2250-01-01', st.session_state['opps']['ValidToDate'])

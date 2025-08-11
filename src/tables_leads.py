@@ -6,8 +6,9 @@ import streamlit as st
 from dateutil.relativedelta import relativedelta
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-file_2025_5 =  os.path.join(BASE_DIR,'..', 'data', '2025_5.csv')
-file_2025_6 =  os.path.join(BASE_DIR,'..', 'data', '2025_6.csv')
+file_2025_5 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2025_5.csv')
+file_2025_6 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2025_6.csv')
+file_2025_7 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2025_7.csv')
 
 
 
@@ -17,9 +18,12 @@ def load_data():
         f_2025_5['Period'] = '2025-05-01'
         f_2025_6 = pd.read_csv(file_2025_6)
         f_2025_6['Period'] = '2025-06-01'
+        f_2025_7 = pd.read_csv(file_2025_7)
+        f_2025_7['Period'] = '2025-07-01'
 
-        st.session_state['leads'] = pd.concat([f_2025_5, f_2025_6])
-        st.session_state['leads_loaded'] = True
+
+    st.session_state['leads'] = pd.concat([f_2025_5, f_2025_6, f_2025_7])
+    st.session_state['leads_loaded'] = True
     return st.session_state['leads']
 
 
