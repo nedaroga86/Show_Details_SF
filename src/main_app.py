@@ -13,7 +13,7 @@ opportunities_file_2025_4 =  os.path.join(BASE_DIR,'..', 'data', 'opportunities'
 opportunities_file_2025_5 =  os.path.join(BASE_DIR,'..', 'data', 'opportunities', 'opportunities_2025-05-01.csv')
 opportunities_file_2025_6 =  os.path.join(BASE_DIR,'..', 'data', 'opportunities', 'opportunities_2025-06-01.csv')
 opportunities_file_2025_7 =  os.path.join(BASE_DIR,'..', 'data', 'opportunities', 'opportunities_2025-07-01.csv')
-
+opportunities_file_2025_8 =  os.path.join(BASE_DIR,'..', 'data', 'opportunities', 'opportunities_2025-08-01.csv')
 
 file_2025_5 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2025_5.csv')
 file_2025_6 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2025_6.csv')
@@ -27,7 +27,8 @@ def load_opp():
             pd.read_csv(opportunities_file_2025_4),
             pd.read_csv(opportunities_file_2025_5),
             pd.read_csv(opportunities_file_2025_6),
-            pd.read_csv(opportunities_file_2025_7)
+            pd.read_csv(opportunities_file_2025_7),
+            pd.read_csv(opportunities_file_2025_8)
         ], ignore_index=True)
 
         st.session_state['opps'].columns = st.session_state['opps'].columns.str.strip()
