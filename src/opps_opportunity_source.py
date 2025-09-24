@@ -9,8 +9,6 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 def show_opportunity_source_table(filtered_data):
 
-    # Display the table
-    st.text(f"Opportunities for {st.session_state['period']}: {filtered_data['Amount'].sum()/1000:,.0f}K")
     filtered_data.rename(columns={
         'Opportunity.Created Date': 'Created Dates',
         'Opportunity.Close Date': 'Close Dates'
