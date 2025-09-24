@@ -1,6 +1,6 @@
 import streamlit as st
 
-from src.opps_opportunity_source import preprocess_opp_source
+from opps_opportunity_source import preprocess_opp_source
 
 st.markdown("""
     <style>
