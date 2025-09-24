@@ -13,11 +13,12 @@ opportunities_file_2025_4 =  os.path.join(BASE_DIR,'..', 'data', 'opportunities'
 opportunities_file_2025_5 =  os.path.join(BASE_DIR,'..', 'data', 'opportunities', 'opportunities_2025-05-01.csv')
 opportunities_file_2025_6 =  os.path.join(BASE_DIR,'..', 'data', 'opportunities', 'opportunities_2025-06-01.csv')
 opportunities_file_2025_7 =  os.path.join(BASE_DIR,'..', 'data', 'opportunities', 'opportunities_2025-07-01.csv')
-
+opportunities_file_2025_8 =  os.path.join(BASE_DIR,'..', 'data', 'opportunities', 'opportunities_2025-08-01.csv')
 
 file_2025_5 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2025_5.csv')
 file_2025_6 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2025_6.csv')
 file_2025_7 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2025_7.csv')
+file_2025_8 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2025_8.csv')
 
 
 def load_opp():
@@ -27,7 +28,8 @@ def load_opp():
             pd.read_csv(opportunities_file_2025_4),
             pd.read_csv(opportunities_file_2025_5),
             pd.read_csv(opportunities_file_2025_6),
-            pd.read_csv(opportunities_file_2025_7)
+            pd.read_csv(opportunities_file_2025_7),
+            pd.read_csv(opportunities_file_2025_8)
         ], ignore_index=True)
 
         st.session_state['opps'].columns = st.session_state['opps'].columns.str.strip()
@@ -46,7 +48,9 @@ def load_leads():
         f_2025_6['Period'] = '2025-06-01'
         f_2025_7 = pd.read_csv(file_2025_7)
         f_2025_7['Period'] = '2025-07-01'
-        st.session_state['leads'] = pd.concat([f_2025_5, f_2025_6,f_2025_7])
+        f_2025_8 = pd.read_csv(file_2025_8)
+        f_2025_8['Period'] = '2025-08-01'
+        st.session_state['leads'] = pd.concat([f_2025_5, f_2025_6,f_2025_7,f_2025_8])
         st.session_state['leads_loaded'] = True
     return st.session_state['leads']
 
