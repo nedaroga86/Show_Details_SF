@@ -2,7 +2,7 @@ import os
 import numpy as np
 import pandas as pd
 import streamlit as st
-from logout import call_logout
+
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 icon =  os.path.join(BASE_DIR, '..', 'images','logo.ico')
@@ -64,22 +64,11 @@ def call_main_app():
 
     with st.spinner("Wait for it..."):
         get_data()
-    logout = st.sidebar.button('Logout', key='logout_button',type='primary')
-    if logout:
-        call_logout()
-
-
-    pages = {
-        "Opportunities": [
-            st.Page("tables_opportunities.py", title="New Pipeline"),
-            st.Page("tables_opportunity_source.py", title="Opportunities Source"),
-        ],
-        "Leads": [
-            st.Page("tables_leads.py", title="Priority Leads"),
-            st.Page("tables_converted_leads.py", title="Converted Leads"),
-        ]
-    }
-
-
+    pages = [
+        st.Page("opportunities.py", title="Opportunities"),
+        st.Page("leads.py", title="Leads Metrics"),
+        st.Page("logout.py", title="Logout")
+    ]
     pg = st.navigation(pages, position="top")
     pg.run()
+

@@ -5,57 +5,13 @@ import pandas as pd
 import streamlit as st
 from dateutil.relativedelta import relativedelta
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-file_2025_5 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2025_5.csv')
-file_2025_6 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2025_6.csv')
-file_2025_7 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2025_7.csv')
+from main_app import get_data
 
 
 
-def load_data():
-    if not st.session_state.get('leads_loaded', False):
-        f_2025_5 = pd.read_csv(file_2025_5)
-        f_2025_5['Period'] = '2025-05-01'
-        f_2025_6 = pd.read_csv(file_2025_6)
-        f_2025_6['Period'] = '2025-06-01'
-        f_2025_7 = pd.read_csv(file_2025_7)
-        f_2025_7['Period'] = '2025-07-01'
-
-
-    st.session_state['leads'] = pd.concat([f_2025_5, f_2025_6, f_2025_7])
-    st.session_state['leads_loaded'] = True
-    return st.session_state['leads']
-
-
-def get_data():
+def show_leads_table(leads_df, period):
     if 'leads' not in st.session_state:
-        st.session_state['leads'] = load_data()
-    return st.session_state['leads']
-
-def get_open_Stage():
-    data = get_data()
-    open_stages = data['Stage Name'].unique().tolist()
-    open_stages = [stage for stage in open_stages if stage not in ['100% Signed Agreement', '0% Closed Lost']]
-    return open_stages
-
-def get_all_Stages():
-    data = get_data()
-    all_stages = data['Stage Name'].unique().tolist()
-    all_stages = [stage for stage in all_stages if stage not in ['100% Signed Agreement', '0% Closed Lost']]
-    all_stages.append('100% Signed Agreement')
-    all_stages.append('0% Closed Lost')
-    return all_stages
-
-
-
-
-def show_leads_table():
-    st.subheader('Leads Table')
-    leads_df = get_data()
-    periods = leads_df['Period'].unique().tolist()
-    period = st.sidebar.selectbox("Period", periods)
-    leads_df = leads_df[leads_df['Period'] == period]
-
+        get_data()
     start_date =  np.datetime64(period, 'D')
     end_date = np.datetime64(start_date + relativedelta(months=1))
 
@@ -82,4 +38,3 @@ def show_leads_table():
     st.text(f"Number of leads: {filtered_df[mask].shape[0]}")
     st.dataframe(filtered_df[mask], use_container_width=True, height=700)
 
-show_leads_table()

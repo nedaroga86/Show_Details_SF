@@ -3,32 +3,36 @@ import streamlit as st
 from dateutil.relativedelta import relativedelta
 
 
-def define_filters(data):
-    period = st.sidebar.selectbox("Period", sorted(list(data['Period'].unique())))
+def define_filters(data, key_prefix=""):
+
+    period = st.radio("Period", sorted(list(data['Period'].unique()), reverse=True), horizontal=True, label_visibility="collapsed",key=f"{key_prefix}_period")
     filtered_data = data[data['Period'] == period]
-
-    start_date =  np.datetime64(period, 'D')
-    end_date = np.datetime64(start_date + relativedelta(months=1))
-
-    # Filter data based on date range
-    filtered_data = filtered_data[(filtered_data['ValidFromDate'] >= start_date) & (filtered_data['ValidFromDate'] < end_date)]
+    cont = st.container(horizontal = True)
+    with cont:
 
 
-    type = st.sidebar.selectbox("Opportunity Type", options=['All'] + list(filtered_data['Opportunity Type'].unique()))
-    if type != 'All':
-        filtered_data = filtered_data[filtered_data['Opportunity Type'] == type]
+        start_date =  np.datetime64(period, 'D')
+        end_date = np.datetime64(start_date + relativedelta(months=1))
 
-    source = st.sidebar.selectbox("Opportunity Source", options=['All'] + list(filtered_data['Opportunity Source'].unique()))
-    if source != 'All':
-        filtered_data = filtered_data[filtered_data['Opportunity Source'] == source]
+        # Filter data based on date range
+        filtered_data = filtered_data[(filtered_data['ValidFromDate'] >= start_date) & (filtered_data['ValidFromDate'] < end_date)]
 
-    product = st.sidebar.selectbox("Product", options=['All'] + list(filtered_data['Product Family'].unique()))
-    if product != 'All':
-        filtered_data = filtered_data[filtered_data['Product Family'] == product]
+        if key_prefix != "tab2":
+            type = st.selectbox("Opportunity Type", options=['All'] + list(filtered_data['Opportunity Type'].unique()),key=f"{key_prefix}_type")
+            if type != 'All':
+                filtered_data = filtered_data[filtered_data['Opportunity Type'] == type]
 
-    region = st.sidebar.selectbox("Region", options=['All'] + list(filtered_data['Territory Bucket'].unique()))
-    if region != 'All':
-        filtered_data = filtered_data[filtered_data['Territory Bucket'] == region]
+        source = st.selectbox("Opportunity Source", options=['All'] + list(filtered_data['Opportunity Source'].unique()),key=f"{key_prefix}_source")
+        if source != 'All':
+            filtered_data = filtered_data[filtered_data['Opportunity Source'] == source]
+
+        product = st.selectbox("Product", options=['All'] + list(filtered_data['Product Family'].unique()),key=f"{key_prefix}_product")
+        if product != 'All':
+            filtered_data = filtered_data[filtered_data['Product Family'] == product]
+
+        region = st.selectbox("Region", options=['All'] + list(filtered_data['Territory Bucket'].unique()),key=f"{key_prefix}_region")
+        if region != 'All':
+            filtered_data = filtered_data[filtered_data['Territory Bucket'] == region]
 
 
     return filtered_data, period

@@ -7,3 +7,5 @@ def call_logout():
     st.session_state.logged_in = False
     st.rerun()
 
+call_logout()
+

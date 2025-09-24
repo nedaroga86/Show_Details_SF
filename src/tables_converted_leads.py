@@ -4,55 +4,14 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-file_2025_5 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2025_5.csv')
-file_2025_6 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2025_6.csv')
-file_2025_7 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2025_7.csv')
+from main_app import get_data
 
 
 
-
-def load_data():
-    if not st.session_state.get('leads_loaded', False):
-        f_2025_5 = pd.read_csv(file_2025_5)
-        f_2025_5['Period'] = '2025-05-01'
-        f_2025_6 = pd.read_csv(file_2025_6)
-        f_2025_6['Period'] = '2025-06-01'
-
-        st.session_state['leads'] = pd.concat([f_2025_5, f_2025_6])
-        st.session_state['leads_loaded'] = True
-    return st.session_state['leads']
-
-
-def get_data():
+def show_converted_leads(leads_df):
     if 'leads' not in st.session_state:
-        st.session_state['leads'] = load_data()
-    return st.session_state['leads']
+        get_data()
 
-def get_open_Stage():
-    data = get_data()
-    open_stages = data['Stage Name'].unique().tolist()
-    open_stages = [stage for stage in open_stages if stage not in ['100% Signed Agreement', '0% Closed Lost']]
-    return open_stages
-
-def get_all_Stages():
-    data = get_data()
-    all_stages = data['Stage Name'].unique().tolist()
-    all_stages = [stage for stage in all_stages if stage not in ['100% Signed Agreement', '0% Closed Lost']]
-    all_stages.append('100% Signed Agreement')
-    all_stages.append('0% Closed Lost')
-    return all_stages
-
-
-
-
-def show_converted_leads():
-    st.subheader('Marketing Leads Converted to Opportunities Total ACV  ')
-    st.sidebar.text('This table shows the total ACV of marketing leads converted to opportunities in the month of May 2025. ')
-    leads_df = get_data()
-    periods = leads_df['Period'].unique().tolist()
-    period = st.sidebar.selectbox("Period", periods)
-    leads_df = leads_df[leads_df['Period'] == period]
     start_date =  np.datetime64('2025-05-01', 'D')
     end_date = np.datetime64('2025-06-01', 'D')
 
@@ -79,4 +38,3 @@ def show_converted_leads():
     st.dataframe(opp_converted.drop_duplicates().sort_values(by='Amount', ascending=False), use_container_width=True, height=700)
 
 
-show_converted_leads()

@@ -1,30 +1,15 @@
 import os
 
-import numpy as np
+
 import pandas as pd
 import streamlit as st
 
-from filter_opps import define_filters
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 
-def show_opportunity_source_table():
-    st.title('Opportunity Source Details')
-    st.markdown('#### Opportunity Source: Marketing, Channel, Sales ')
-
-    st.session_state['opps_filtered'],st.session_state['period'] = define_filters(st.session_state['opps'])
-
-    filtered_data = st.session_state['opps_filtered']
-
-    filtered_data = filtered_data[filtered_data['Opportunity Type']== 'New Customer']
-
-    filtered_data = filtered_data[~filtered_data['Loss Reason'].isin(['Duplicate', 'Duplicate Opportunity'])]
-
-    filtered_data['first_day_of_month'] = filtered_data['ValidFromDate'].dt.to_period('M').dt.to_timestamp()
-    filtered_data['Last_day_of_month'] = filtered_data['ValidToDate'].dt.to_period('M').dt.to_timestamp()
-    filtered_data['is_valid'] = filtered_data['Last_day_of_month'] > filtered_data['first_day_of_month']
+def show_opportunity_source_table(filtered_data):
 
 
     target_date = pd.to_datetime("1899-12-30") + pd.to_timedelta(32874, unit="D")
@@ -57,4 +42,3 @@ def show_opportunity_source_table():
     st.dataframe(filtered_data[['Opportunity ID', 'Opportunity Number', 'Account Name','Stage Name', 'Name', 'Stage', 'Created Dates','Full Name',
                                 'Close Dates','Amount','Product Family','Industry','Territory Bucket','Market Segment','Opportunity Type']], use_container_width =True, hide_index=True, height=700)
 
-show_opportunity_source_table()

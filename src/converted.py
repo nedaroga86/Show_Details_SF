@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-df = pd.read_pickle('opportunities.pkl')
+df = pd.read_pickle('../data/opportunities.pkl')
 periods = df['Period'].unique()
 
 for period in periods:
