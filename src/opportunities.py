@@ -1,4 +1,7 @@
 import streamlit as st
+
+from src.opps_opportunity_source import preprocess_opp_source
+
 st.markdown("""
     <style>
     /* Reduce padding superior de toda la app */
@@ -59,12 +62,8 @@ with tab2:
     with filter_cont2:
         st.session_state['opps_filtered'],st.session_state['period'] = define_filters(st.session_state['opps'], key_prefix="tab2")
 
-    filtered_data = st.session_state.opps_filtered.copy()
-    filtered_data = filtered_data[filtered_data['Opportunity Type']== 'New Customer']
-    filtered_data = filtered_data[~filtered_data['Loss Reason'].isin(['Duplicate', 'Duplicate Opportunity'])]
-    filtered_data['first_day_of_month'] = filtered_data['ValidFromDate'].dt.to_period('M').dt.to_timestamp()
-    filtered_data['Last_day_of_month'] = filtered_data['ValidToDate'].dt.to_period('M').dt.to_timestamp()
-    filtered_data['is_valid'] = filtered_data['Last_day_of_month'] > filtered_data['first_day_of_month']
+    data = st.session_state.opps_filtered.copy()
+    filtered_data = preprocess_opp_source(data)
     show_summary_by_stage(filtered_data, key='summary_stage2')
     st.divider()
     show_opportunity_source_table(filtered_data)
