@@ -41,7 +41,7 @@ def show_summary_by_stage(data, key):
                    "Total_Amount": st.column_config.NumberColumn("Total_Amount", format="localized")}
                    ,hide_index=True)
     total_column_a = summary_by_stage['Total_Amount'].sum()
-    st.write(f"\nTotal for Total Amount: {total_column_a/1000:,.0f}K")
+    st.write(f"\nTotal for Total Amount: {total_column_a:,.0f}K")
 
 
 columns = ['Stage Name', 'Product Family', 'Full Name', 'Territory Bucket', 'Market Segment', 'Industry', 'Opportunity Type']
