@@ -67,6 +67,7 @@ with tab2:
 
     data = st.session_state.opps_filtered.copy()
     filtered_data = preprocess_opp_source(data)
+    st.divider()
     show_summary_by_stage(filtered_data, key='summary_stage2')
     st.divider()
     show_opportunity_source_table(filtered_data)
