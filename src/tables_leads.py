@@ -14,17 +14,16 @@ def show_leads_table(leads_df, period):
     start_date =  np.datetime64(period, 'D')
     end_date = np.datetime64(start_date + relativedelta(months=1))
 
-    cont_lead = st.container(border=True)
-    with cont_lead:
-        list_priority = ['Priority 1', 'Priority 2', 'Priority 3']
-        lead_priority = st.radio("Lead Priority", options=['All'] + list_priority, key='Lead_Priority', horizontal=True)
+
+    list_priority = ['Priority 1', 'Priority 2', 'Priority 3']
+    lead_priority = st.sidebar.radio("Lead Priority", options=['All'] + list_priority, key='Lead_Priority')
     if lead_priority != 'All':
         filtered_df = leads_df[leads_df['Lead Priority'] == lead_priority]
     else:
         filtered_df = leads_df
 
 
-    mask = (
+    priority_mask = (
             (filtered_df['Special Exclusion'].isna()) &
             (pd.to_datetime(filtered_df['RFS Date/Time']) >= start_date) &
             (pd.to_datetime(filtered_df['RFS Date/Time']) < end_date) &
@@ -36,6 +35,7 @@ def show_leads_table(leads_df, period):
             filtered_df['Priotity Exclusion'].isna()
     )
 
-    st.text(f"Number of leads: {filtered_df[mask].shape[0]}")
-    st.dataframe(filtered_df[mask], use_container_width=True, height=700)
+
+    st.text(f"Number of leads: {filtered_df[priority_mask].shape[0]}")
+    st.dataframe(filtered_df[priority_mask], use_container_width=True, height=800)
 

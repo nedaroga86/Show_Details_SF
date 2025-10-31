@@ -2,22 +2,13 @@ import streamlit as st
 
 from opps_opportunity_source import preprocess_opp_source
 
-st.markdown("""
-    <style>
-    /* Reduce padding superior de toda la app */
-    .block-container {
-        padding-top: 0rem;
-        padding-bottom: 0rem;
-    }
-    </style>
-""", unsafe_allow_html=True)
+
 from opps_opportunity_source import show_opportunity_source_table
 from filter_opps import define_filters
 from opps_new_pipeline import preprocess_data, show_opportunity_table
 
 
-st.divider()
-tab1, tab2 = st.tabs(["📊 New Pipeline", "📈 Opportunity Source"])
+
 
 
 def show_summary_by_stage(data, key):
@@ -44,31 +35,22 @@ def show_summary_by_stage(data, key):
     st.write(f"\nTotal for Total Amount: {total_column_a:,.0f}K")
 
 
-columns = ['Stage Name', 'Product Family', 'Full Name', 'Territory Bucket', 'Market Segment', 'Industry', 'Opportunity Type']
-
-
-with tab1:
-    filter_cont = st.container(border=True, gap="small")
-    with filter_cont:
-        st.session_state['opps_filtered'],st.session_state['period'] = define_filters(st.session_state['opps'], key_prefix="tab1")
-
-    data = st.session_state.opps_filtered.copy()
-
-    filtered_data = preprocess_data(data)
-
-    show_summary_by_stage(filtered_data, key='summary_stage1')
-    st.divider(width="stretch")
-    show_opportunity_table(filtered_data)
-
-with tab2:
-    filter_cont2 = st.container(border=True, gap="small")
-    with filter_cont2:
-        st.session_state['opps_filtered'],st.session_state['period'] = define_filters(st.session_state['opps'], key_prefix="tab2")
-
+def show_opportunity_source():
+    st.markdown("""
+    <style>
+    /* Reduce padding superior de toda la app */
+    .block-container {
+        padding-top: 3rem;
+        padding-bottom: 0rem;
+    }
+    </style>
+""", unsafe_allow_html=True)
+    st.session_state['opps_filtered'],st.session_state['period'] = define_filters(st.session_state['opps'], key_prefix="tab2")
     data = st.session_state.opps_filtered.copy()
     filtered_data = preprocess_opp_source(data)
-    st.divider()
+    st.subheader("Summary by Selected Metric", divider="red")
     show_summary_by_stage(filtered_data, key='summary_stage2')
-    st.divider()
+    st.subheader("Details", divider="red")
     show_opportunity_source_table(filtered_data)
 
+show_opportunity_source()

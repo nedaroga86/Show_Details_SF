@@ -71,8 +71,10 @@ def call_main_app():
     with st.spinner("Wait for it..."):
         get_data()
     pages = [
-        st.Page("opportunities.py", title="Opportunities"),
-        st.Page("leads.py", title="Leads Metrics"),
+        st.Page("new_pipeline.py", title="New Pipeline"),
+        st.Page("opportunity_source.py", title="Opportunity Source"),
+        st.Page("priority_leads.py", title="Priority Leads"),
+        st.Page("converted_leads.py", title="Converted Leads"),
         st.Page("logout.py", title="Logout")
     ]
     pg = st.navigation(pages, position="top")
