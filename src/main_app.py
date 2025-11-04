@@ -1,20 +1,14 @@
 import os
-import numpy as np
+
 import pandas as pd
 import streamlit as st
-
+from glob import glob
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 icon =  os.path.join(BASE_DIR, '..', 'images','logo.ico')
 
 
-opportunities_file_2025_3 =  os.path.join(BASE_DIR,'..', 'data', 'opportunities','opportunities_2025-03-01.csv')
-opportunities_file_2025_4 =  os.path.join(BASE_DIR,'..', 'data', 'opportunities','opportunities_2025-04-01.csv')
-opportunities_file_2025_5 =  os.path.join(BASE_DIR,'..', 'data', 'opportunities', 'opportunities_2025-05-01.csv')
-opportunities_file_2025_6 =  os.path.join(BASE_DIR,'..', 'data', 'opportunities', 'opportunities_2025-06-01.csv')
-opportunities_file_2025_7 =  os.path.join(BASE_DIR,'..', 'data', 'opportunities', 'opportunities_2025-07-01.csv')
-opportunities_file_2025_8 =  os.path.join(BASE_DIR,'..', 'data', 'opportunities', 'opportunities_2025-08-01.csv')
-opportunities_file_2025_9 =  os.path.join(BASE_DIR,'..', 'data', 'opportunities', 'opportunities_2025-09-01.csv')
+OPPS_DIR = os.path.join(BASE_DIR, '..', 'data', 'opportunities')
 
 file_2025_5 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2025_5.csv')
 file_2025_6 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2025_6.csv')
@@ -23,24 +17,31 @@ file_2025_8 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2025_8.csv')
 
 
 def load_opp():
-    if not st.session_state.get('data_loaded', False):
-        st.session_state['opps'] = pd.concat([
-            pd.read_csv(opportunities_file_2025_3),
-            pd.read_csv(opportunities_file_2025_4),
-            pd.read_csv(opportunities_file_2025_5),
-            pd.read_csv(opportunities_file_2025_6),
-            pd.read_csv(opportunities_file_2025_7),
-            pd.read_csv(opportunities_file_2025_8),
-            pd.read_csv(opportunities_file_2025_9)
-        ], ignore_index=True)
 
-        st.session_state['opps'].columns = st.session_state['opps'].columns.str.strip()
-        st.session_state['opps']['ValidFromDate'] = st.session_state['opps']['ValidFromDate'].astype('datetime64[ns]')
-        st.session_state['opps']['ValidToDate'] = np.where(st.session_state['opps']['ValidToDate'] == '3000-01-01', '2250-01-01', st.session_state['opps']['ValidToDate'])
-        st.session_state['opps']['ValidToDate'] = st.session_state['opps']['ValidToDate'].astype('datetime64[ns]')
-        st.session_state['opps']['Amount'] = pd.to_numeric(st.session_state['opps']['Amount'], errors='coerce')
-        st.session_state['data_loaded'] = True
-    return st.session_state['opps']
+    if st.session_state.get('data_loaded', False):
+        return st.session_state['opps']
+
+
+    files = sorted(glob(os.path.join(OPPS_DIR, '*.csv')))
+
+    dfs = []
+    for f in files:
+        df = pd.read_csv(f, parse_dates=['ValidFromDate', 'ValidToDate'])
+        df['Amount'] = df['Amount'].replace({',': ''}, regex=True).astype(float)
+        dfs.append(df)
+
+
+    opps = pd.concat(dfs, ignore_index=True)
+    opps.columns = opps.columns.str.strip()
+
+    opps['ValidToDate'] = opps['ValidToDate'].replace('3000-01-01', '2250-01-01')
+    opps['ValidToDate'] = pd.to_datetime(opps['ValidToDate'], errors='coerce')
+
+    opps['Amount'] = pd.to_numeric(opps['Amount'], errors='coerce')
+
+    st.session_state['opps'] = opps
+    st.session_state['data_loaded'] = True
+    return opps
 
 def load_leads():
     if not st.session_state.get('leads_loaded', False):
