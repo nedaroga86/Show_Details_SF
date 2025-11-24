@@ -1,10 +1,14 @@
 import streamlit as st
 def call_logout():
-    st.set_page_config(initial_sidebar_state="collapsed")
-    st.session_state.clear()
-    # Redirect to the login page
     st.session_state.logged_in = False
-    st.rerun()
+    for k in list(st.session_state.keys()):
+        if k not in ["logger"]:  # si tienes logger persistente
+            del st.session_state[k]
+
+    # 🔄 Recarga la app base (esto desmonta el menú visual)
+    st.markdown(
+        "<meta http-equiv='refresh' content='0; url=/'/>",
+        unsafe_allow_html=True,
+    )
 
 call_logout()
-
