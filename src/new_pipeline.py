@@ -14,11 +14,12 @@ from opps_new_pipeline import preprocess_data, show_opportunity_table
 
 def show_summary_by_stage(data, key):
     col1, col2,col3 = st.columns([3,7,4])
-    column = col1.radio('Metric', options=['Stage Name', 'Product Family', 'Full Name', 'Territory Bucket', 'Market Segment', 'Industry', 'Opportunity Type'], horizontal=False, key=key)
+    column = col1.radio('Metric', options=['Stage Name', 'Product Family', 'Full Name', 'Territory Bucket', 'Market Segment',
+     'Industry', 'Opportunity Type'], horizontal=False, key=key)
 
     opps = data.copy()
     opps['Amount'] = (opps['Amount']/1000)
-    opps['Amount'] = opps['Amount'].round(0)
+    opps['Amount'] = opps['Amount'].round(2)
     summary_by_stage = (
         opps.groupby([column])
         .agg(

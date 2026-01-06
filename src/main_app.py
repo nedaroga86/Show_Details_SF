@@ -21,10 +21,8 @@ file_2025_12 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2025_12.csv')
 
 
 def load_opp():
-
     if st.session_state.get('data_loaded', False):
         return st.session_state['opps']
-
 
     files = sorted(glob(os.path.join(OPPS_DIR, '*.csv')))
 
