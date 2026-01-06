@@ -11,7 +11,7 @@ def show_opportunity_table(filtered_data):
     }, inplace=True)
 
     filtered_data = filtered_data.sort_values(by='Amount', ascending=False)
-    filtered_data['Amount'] = (filtered_data['Amount']/1000).astype('int').round(0)
+    filtered_data['Amount'] = (filtered_data['Amount']/1000).astype('int').round(2)
     num_rows = len(filtered_data)
     height = min(800, max(300, num_rows * 25))
     st.dataframe(filtered_data[['Opportunity ID', 'Opportunity Number', 'Account Name','Stage Name', 'Name', 'Stage', 'Created Dates','Full Name',
