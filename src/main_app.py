@@ -65,7 +65,7 @@ def load_leads():
         f_2025_11['Period'] = '2025-11-01'
         f_2025_12 = pd.read_csv(file_2025_12)
         f_2025_12['Period'] = '2025-12-01'
-        st.session_state['leads'] = pd.concat([f_2025_5, f_2025_6,f_2025_7,f_2025_8,f_2025_9,f_2025_10,f_2025_11,f_2025_11])
+        st.session_state['leads'] = pd.concat([f_2025_5, f_2025_6,f_2025_7,f_2025_8,f_2025_9,f_2025_10,f_2025_11,f_2025_12])
         st.session_state['leads_loaded'] = True
     return st.session_state['leads']
 
