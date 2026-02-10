@@ -18,6 +18,7 @@ file_2025_9 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2025_9.csv')
 file_2025_10 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2025_10.csv')
 file_2025_11 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2025_11.csv')
 file_2025_12 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2025_12.csv')
+file_2026_1 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2026_1.csv')
 
 
 def load_opp():
@@ -63,7 +64,9 @@ def load_leads():
         f_2025_11['Period'] = '2025-11-01'
         f_2025_12 = pd.read_csv(file_2025_12)
         f_2025_12['Period'] = '2025-12-01'
-        st.session_state['leads'] = pd.concat([f_2025_5, f_2025_6,f_2025_7,f_2025_8,f_2025_9,f_2025_10,f_2025_11,f_2025_12])
+        f_2026_1 = pd.read_csv(file_2026_1)
+        f_2026_1['Period'] = '2026-01-01'
+        st.session_state['leads'] = pd.concat([f_2025_5, f_2025_6,f_2025_7,f_2025_8,f_2025_9,f_2025_10,f_2025_11,f_2025_12,f_2026_1])
         st.session_state['leads_loaded'] = True
     return st.session_state['leads']
 
