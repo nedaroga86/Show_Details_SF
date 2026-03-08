@@ -64,14 +64,6 @@ def load_leads_new(): ## Por finalizar
 
 def load_leads():
     if not st.session_state.get('leads_loaded', False):
-        f_2025_5 = pd.read_csv(file_2025_5)
-        f_2025_5['Period'] = '2025-05-01'
-        f_2025_6 = pd.read_csv(file_2025_6)
-        f_2025_6['Period'] = '2025-06-01'
-        f_2025_7 = pd.read_csv(file_2025_7)
-        f_2025_7['Period'] = '2025-07-01'
-        f_2025_8 = pd.read_csv(file_2025_8)
-        f_2025_8['Period'] = '2025-08-01'
         f_2025_9 = pd.read_csv(file_2025_9)
         f_2025_9['Period'] = '2025-09-01'
         f_2025_10 = pd.read_csv(file_2025_10)
