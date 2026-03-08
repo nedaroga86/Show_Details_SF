@@ -14,6 +14,9 @@ def show_priority_leads():
     """, unsafe_allow_html=True)
 
     leads_df = st.session_state.leads.copy()
+
+
+
     periods = sorted(leads_df['Period'].unique().tolist(), reverse=True)
     period = st.radio("Period", periods, horizontal=True, label_visibility="collapsed")
 
