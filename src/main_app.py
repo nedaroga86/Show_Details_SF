@@ -9,6 +9,7 @@ icon =  os.path.join(BASE_DIR, '..', 'images','logo.ico')
 
 
 OPPS_DIR = os.path.join(BASE_DIR, '..', 'data', 'opportunities')
+LEADS_DIR = os.path.join(BASE_DIR, '..', 'leads', 'opportunities')
 
 file_2025_5 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2025_5.csv')
 file_2025_6 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2025_6.csv')
@@ -19,7 +20,7 @@ file_2025_10 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2025_10.csv')
 file_2025_11 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2025_11.csv')
 file_2025_12 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2025_12.csv')
 file_2026_1 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2026_1.csv')
-
+file_2026_2 =  os.path.join(BASE_DIR,'..', 'data', 'leads','2026_2.csv')
 
 def load_opp():
     if st.session_state.get('data_loaded', False):
@@ -46,6 +47,25 @@ def load_opp():
     st.session_state['data_loaded'] = True
     return opps
 
+
+def load_leads_new(): ## Por finalizar
+    if st.session_state.get('leads_loaded', False):
+        return st.session_state['leads']
+
+    files = sorted(glob(os.path.join(LEADS_DIR, '*.csv')))
+
+    dfs = []
+    for f in files:
+        df = pd.read_csv(f)
+        dfs.append(df)
+
+    opps = pd.concat(dfs, ignore_index=True)
+
+
+    st.session_state['leads'] = opps
+    st.session_state['leads_loaded'] = True
+    return st.session_state['leads']
+
 def load_leads():
     if not st.session_state.get('leads_loaded', False):
         f_2025_5 = pd.read_csv(file_2025_5)
@@ -66,7 +86,9 @@ def load_leads():
         f_2025_12['Period'] = '2025-12-01'
         f_2026_1 = pd.read_csv(file_2026_1)
         f_2026_1['Period'] = '2026-01-01'
-        st.session_state['leads'] = pd.concat([f_2025_5, f_2025_6,f_2025_7,f_2025_8,f_2025_9,f_2025_10,f_2025_11,f_2025_12,f_2026_1])
+        f_2026_2 = pd.read_csv(file_2026_2)
+        f_2026_2['Period'] = '2026-01-02'
+        st.session_state['leads'] = pd.concat([f_2025_5, f_2025_6,f_2025_7,f_2025_8,f_2025_9,f_2025_10,f_2025_11,f_2025_12,f_2026_1,f_2026_2])
         st.session_state['leads_loaded'] = True
     return st.session_state['leads']
 
